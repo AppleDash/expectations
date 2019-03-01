@@ -1,7 +1,5 @@
 package org.appledash.expectations.expectors;
 
-import org.appledash.expectations.impl.Expectation;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -22,4 +20,22 @@ public abstract class Expector<TPattern, TInput, TArgument> {
     }
 
     public abstract boolean matches(TPattern pattern, TInput input);
+
+    private static class Expectation<TPattern, TAction> {
+        private final TPattern pattern;
+        private final Consumer<TAction> action;
+
+        public Expectation(TPattern pattern, Consumer<TAction> action) {
+            this.pattern = pattern;
+            this.action = action;
+        }
+
+        public TPattern getPattern() {
+            return this.pattern;
+        }
+
+        public Consumer<TAction> getAction() {
+            return this.action;
+        }
+    }
 }
